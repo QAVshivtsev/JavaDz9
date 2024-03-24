@@ -1,10 +1,24 @@
-package ru.netology.radio;
+package ru.netology;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class RadioTest {
+
     Radio radio = new Radio();
+
+    @Test
+    public void testCurrentNumberStation() {
+
+
+        Assertions.assertEquals(0, radio.getCurrentRadioStation());
+    }
+
+    @Test
+    public void testCountRadioStation() {
+        Assertions.assertEquals(10, radio.getCountRadioStation());
+    }
+
 
     // Увеличить громкость
     @Test

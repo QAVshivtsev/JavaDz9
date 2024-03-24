@@ -1,15 +1,23 @@
-package ru.netology.radio;
+package ru.netology;
 
 public class Radio {
+    private int maxSoundVolume = 100; // Максимальная громкость
+    private int minSoundVolume = 0; // Минимальная громкость
+    private int minNumberRadioStation = 0; //Минимальная радиостанция
+    private int maxNumberRadioStation = 9; //Максимальная радиостанция
+    private int currentVolume; // Текущая громкость звука
+    private int currentRadioStation;  // Текущая радиостанция
+    private int countRadioStation = 10; //Всего радиостанций
 
-    // Текущая громкость звука
-    private int currentVolume;
-    // Текущая радиостанция
-    private int currentRadioStation;
 
     public int getCurrentVolume() {
         return currentVolume;
     }
+
+    public int getCountRadioStation() {
+        return countRadioStation;
+    }
+
 
     public int getCurrentRadioStation() {
         return currentRadioStation;
@@ -17,14 +25,15 @@ public class Radio {
 
     // Установка радиостанции
     public void setCurrentRadioStation(int newCurrentRadioStation) {
-        if (newCurrentRadioStation > 9) {
+        if (newCurrentRadioStation > maxNumberRadioStation) {
             return;
         }
-        if (newCurrentRadioStation < 0) {
+        if (newCurrentRadioStation < minNumberRadioStation) {
             return;
         }
         currentRadioStation = newCurrentRadioStation;
     }
+
 
     public void setCurrentVolume(int newCurrentVolume) {
         currentVolume = newCurrentVolume;
@@ -32,33 +41,37 @@ public class Radio {
 
     // Увеличение громкости на 1
     public void volumeUp() {
-        if (currentVolume < 100) {
+        if (currentVolume < maxSoundVolume) {
             currentVolume = currentVolume + 1;
+        } else {
+            currentVolume = maxSoundVolume;
         }
     }
 
     // Уменьшение громкости на 1
     public void volumeDown() {
-        if (currentVolume > 0) {
+        if (currentVolume > minSoundVolume) {
             currentVolume = currentVolume - 1;
+        } else {
+            currentVolume = minSoundVolume;
         }
     }
 
     // Следущая радиостанция
     public void next() {
-        if (currentRadioStation < 9) {
+        if (currentRadioStation < maxNumberRadioStation) {
             currentRadioStation = currentRadioStation + 1;
         } else {
-            currentRadioStation = 0;
+            currentRadioStation = minNumberRadioStation;
         }
     }
 
     // Предыдущая радиостанция
     public void prev() {
-        if (currentRadioStation > 0) {
+        if (currentRadioStation > minNumberRadioStation) {
             currentRadioStation = currentRadioStation - 1;
         } else {
-            currentRadioStation = 9;
+            currentRadioStation = maxNumberRadioStation;
         }
     }
 }
