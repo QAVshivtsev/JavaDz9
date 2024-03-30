@@ -4,141 +4,221 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class RadioTest {
+    @Test // станция следующая за 9
+    public void StationRadioNext9() {
+        Radio service = new Radio();
 
-    Radio radio = new Radio();
-
-    @Test
-    public void testCurrentNumberStation() {
-
-
-        Assertions.assertEquals(0, radio.getCurrentRadioStation());
-    }
-
-    @Test
-    public void testCountRadioStation() {
-        Assertions.assertEquals(10, radio.getCountRadioStation());
-    }
-
-
-    // Увеличить громкость
-    @Test
-    public void increaseVolume() {
-        radio.setCurrentVolume(3);
-        radio.volumeUp();
-
-        int expected = 4;
-        int actual = radio.getCurrentVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    //Увеличить громкость выше максимума
-    @Test
-    public void increaseVolumeAboveMax() {
-        radio.setCurrentVolume(100);
-        radio.volumeUp();
-
-        int expected = 100;
-        int actual = radio.getCurrentVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    //Cделать тише
-    @Test
-    public void makeItQuieter() {
-        radio.setCurrentVolume(8);
-        radio.volumeDown();
-
-        int expected = 7;
-        int actual = radio.getCurrentVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
-
-    //Сделать громкость ниже минимума
-    @Test
-    public void turnTheVolumeDownToMin() {
-        radio.setCurrentVolume(0);
-        radio.volumeDown();
+        service.setStationRadio(9);
+        service.stationRadioNext();
 
         int expected = 0;
-        int actual = radio.getCurrentVolume();
+        int actual = service.getStationRadio();
 
         Assertions.assertEquals(expected, actual);
     }
 
-    //Выбор радиостанции
-    @Test
-    public void setStation() {
-        radio.setCurrentRadioStation(5);
+    @Test //станция следующая за первой
+    public void StationRadioNext0() {
+        Radio service = new Radio();
 
-        int expected = 5;
-        int actual = radio.getCurrentRadioStation();
+        service.setStationRadio(0);
+        service.stationRadioNext();
+
+        int expected = 1;
+        int actual = service.getStationRadio();
+
         Assertions.assertEquals(expected, actual);
     }
 
-    //Выбор радиостанции больше максимума
-    @Test
-    public void setStationMoreMax() {
-        radio.setCurrentRadioStation(12);
+    @Test //следующая станция
+    public void StationRadioNext7() {
+        Radio service = new Radio();
+
+        service.setStationRadio(7);
+        service.stationRadioNext();
+
+        int expected = 8;
+        int actual = service.getStationRadio();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // включи первую станцию
+    public void StationRadio1() {
+        Radio service = new Radio();
+
+        service.setStationRadio(1);
+
+        int expected = 1;
+        int actual = service.getStationRadio();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // включи станцию не из диапазона
+    public void StationRadio22() {
+        Radio service = new Radio();
+
+        service.setStationRadio(22);
 
         int expected = 0;
-        int actual = radio.getCurrentRadioStation();
+        int actual = service.getStationRadio();
+
         Assertions.assertEquals(expected, actual);
     }
 
-    //Выбор радиостанции меньше минимума
-    @Test
-    public void setStationLessMin() {
-        radio.setCurrentRadioStation(-1);
+    @Test //станция не из диапазона в отрицательных числах
+    public void StationRadioMinus3() {
+        Radio service = new Radio();
+
+        service.setStationRadio(-3);
 
         int expected = 0;
-        int actual = radio.getCurrentRadioStation();
+        int actual = service.getStationRadio();
+
         Assertions.assertEquals(expected, actual);
     }
 
-    //Следующая радиостанция
-    @Test
-    public void nextStation() {
-        radio.setCurrentRadioStation(5);
-        radio.next();
+    @Test // включи станцию в диапазоне
+    public void StationRadio9() {
+        Radio service = new Radio();
 
-        int expected = 6;
-        int actual = radio.getCurrentRadioStation();
-        Assertions.assertEquals(expected, actual);
-    }
-
-    //Следущая радиостанция после максимума
-    @Test
-    public void nextStationAfterMax() {
-        radio.setCurrentRadioStation(9);
-        radio.next();
-
-        int expected = 0;
-        int actual = radio.getCurrentRadioStation();
-        Assertions.assertEquals(expected, actual);
-    }
-
-    //Предыдущая радиостанция
-    @Test
-    public void prevStation() {
-        radio.setCurrentRadioStation(5);
-        radio.prev();
-
-        int expected = 4;
-        int actual = radio.getCurrentRadioStation();
-        Assertions.assertEquals(expected, actual);
-    }
-
-    //Предыдущая станция после минимума
-    @Test
-    public void prevStationAfterMin() {
-        radio.setCurrentRadioStation(0);
-        radio.prev();
+        service.setStationRadio(9);
 
         int expected = 9;
-        int actual = radio.getCurrentRadioStation();
+        int actual = service.getStationRadio();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // включи предыдущую перед 0
+    public void StationRadioPrev0() {
+        Radio service = new Radio();
+
+        service.setStationRadio(0);
+        service.stationRadioPrev();
+
+        int expected = 9;
+        int actual = service.getStationRadio();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // включи предыдущую перед 6
+    public void StationRadioPrev6() {
+        Radio service = new Radio();
+
+        service.setStationRadio(6);
+        service.stationRadioPrev();
+
+        int expected = 5;
+        int actual = service.getStationRadio();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // громкость музыки +1
+    public void volumeRadioNext0() {
+        Radio service = new Radio();
+        service.setIncreaseVolume(0);
+        service.increaseVolumeNext();
+
+        int expected = 1;
+        int actual = service.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // громкость музыки + порог
+    public void volumeRadioNext100() {
+        Radio service = new Radio();
+        service.setIncreaseVolume(100);
+        service.increaseVolumeNext();
+
+        int expected = 100;
+        int actual = service.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // проверка задания громкости не из диапазона
+    public void volumeRadioNextMinus1() {
+        Radio service = new Radio();
+        service.setIncreaseVolume(-1);
+        service.increaseVolumeNext();
+
+        int expected = 0;
+        int actual = service.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // громкость + не из деапазона
+    public void volumeRadioNext101() {
+        Radio service = new Radio();
+        service.setIncreaseVolume(101);
+        service.increaseVolumeNext();
+
+        int expected = 100;
+        int actual = service.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // громкость радио - 0
+    public void volumeRadioPrev0() {
+        Radio service = new Radio();
+        service.setIncreaseVolume(0);
+        service.increaseVolumePrev();
+
+        int expected = 0;
+        int actual = service.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // громкость радио - в диапазоне
+    public void volumeRadioPrev77() {
+        Radio service = new Radio();
+        service.setIncreaseVolume(77);
+        service.increaseVolumePrev();
+
+        int expected = 76;
+        int actual = service.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // Включи 10 станцию с пользовательского интерфейса
+    public void stationNew10() {
+        Radio service = new Radio(10);
+        service.setStationRadio(9);
+
+        int expected = 9;
+        int actual = service.getStationRadio();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // Включи 1 станцию с пользовательского интерфейса
+    public void stationNew1() {
+        Radio service = new Radio(10);
+        service.setStationRadio(1);
+
+        int expected = 1;
+        int actual = service.getStationRadio();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test // включи станцию не из диапазона
+    public void stationTest() {
+        Radio service = new Radio(10);
+        service.setStationRadio(15);
+
+        int expected = 0;
+        int actual = service.getStationRadio();
+
         Assertions.assertEquals(expected, actual);
     }
 }
