@@ -1,64 +1,79 @@
-package ru.netology.radio;
+package ru.netology;
 
 public class Radio {
+    private int currentVolume; // Текущая громкость звука
+    private int stationRadio;  // Текущая радиостанция
+    private int maxStation; //Максимальная радиостанция
 
-    // Текущая громкость звука
-    private int currentVolume;
-    // Текущая радиостанция
-    private int currentRadioStation;
+    //Макс радиостанция без значения
+    public Radio() {
+        this.maxStation = 9;
+    }
 
+    //Макс радиостанция с значением
+    public Radio(int stationsCount) {
+        this.maxStation = stationsCount - 1;
+    }
+
+    // текущая громкость звука без значения
     public int getCurrentVolume() {
         return currentVolume;
     }
 
-    public int getCurrentRadioStation() {
-        return currentRadioStation;
+    // текущая громкость звука с значением
+    public void setIncreaseVolume(int currentVolume) {
+        this.currentVolume = currentVolume;
     }
 
-    // Установка радиостанции
-    public void setCurrentRadioStation(int newCurrentRadioStation) {
-        if (newCurrentRadioStation > 9) {
-            return;
-        }
-        if (newCurrentRadioStation < 0) {
-            return;
-        }
-        currentRadioStation = newCurrentRadioStation;
-    }
-
-    public void setCurrentVolume(int newCurrentVolume) {
-        currentVolume = newCurrentVolume;
-    }
-
-    // Увеличение громкости на 1
-    public void volumeUp() {
+    //Увеличь громкость
+    public void increaseVolumeNext() {
         if (currentVolume < 100) {
-            currentVolume = currentVolume + 1;
+            currentVolume++;
+            return;
         }
+        currentVolume = 100;
     }
 
-    // Уменьшение громкости на 1
-    public void volumeDown() {
+    // уменьши громкость
+    public void increaseVolumePrev() {
         if (currentVolume > 0) {
-            currentVolume = currentVolume - 1;
+            currentVolume--;
+            return;
         }
+        currentVolume = 0;
     }
 
-    // Следущая радиостанция
-    public void next() {
-        if (currentRadioStation < 9) {
-            currentRadioStation = currentRadioStation + 1;
-        } else {
-            currentRadioStation = 0;
-        }
+    // какая станция
+    public int getStationRadio() {
+        return stationRadio;
     }
 
-    // Предыдущая радиостанция
-    public void prev() {
-        if (currentRadioStation > 0) {
-            currentRadioStation = currentRadioStation - 1;
-        } else {
-            currentRadioStation = 9;
+    // включи станцию такую-то
+    public void setStationRadio(int stationRadio) {
+        if (stationRadio > maxStation) {
+            return;
         }
+        if (stationRadio < 0) {
+            return;
+        }
+        this.stationRadio = stationRadio;
+    }
+
+    // следующая станция
+    public void stationRadioNext() {
+        if (stationRadio != maxStation) {
+            stationRadio++;
+            return;
+        }
+        stationRadio = 0;
+    }
+
+    //предыдущая станция
+    public void stationRadioPrev() {
+        if (stationRadio != 0) {
+            stationRadio--;
+            return;
+        }
+        stationRadio = maxStation;
     }
 }
